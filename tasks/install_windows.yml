@@ -40,6 +40,10 @@
         url: "{{ consul_checksum_file_url }}"
         dest: "{{ consul_temp_dir.path }}\\consul_{{ consul_version }}_SHA256SUMS"
       tags: installation
+      register: download_result
+      retries: 6
+      delay: 10
+      until: download_result is succeeded
       when: not consul_checksum.stat.exists | bool
 
     - name: Read Consul package checksum
@@ -54,6 +58,10 @@
         url: "{{ consul_zip_url }}"
         dest: "{{ consul_temp_dir.path }}\\{{ consul_pkg }}"
       tags: installation
+      register: download_result
+      retries: 6
+      delay: 10
+      until: download_result is succeeded
 
     - name: Calculate checksum
       ansible.windows.win_stat:
