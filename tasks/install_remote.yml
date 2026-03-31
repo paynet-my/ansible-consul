@@ -40,6 +40,9 @@
         timeout: 42
         use_proxy: "{{ use_proxy }}"
       register: consul_download
+      retries: 6
+      delay: 10
+      until: consul_download is succeeded
       tags: installation
 
     - name: Unarchive Consul and install binary # noqa no-handler
