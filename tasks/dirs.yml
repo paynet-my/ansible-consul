@@ -26,6 +26,7 @@
         mode: "0750"
       when: not consul_install_from_repo | bool
 
+
 - name: Create log directory
   ansible.builtin.file:
     dest: "{{ consul_log_path }}"
